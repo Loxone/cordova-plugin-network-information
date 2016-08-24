@@ -51,43 +51,8 @@
     switch (networkStatus) {
         case NotReachable:
             return @"none";
-
-        case ReachableViaWWAN:
-        {
-            BOOL isConnectionRequired = [reachability connectionRequired];
-            if (isConnectionRequired) {
-                return @"none";
-            } else {
-                if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-                    CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
-                    if ([telephonyInfo.currentRadioAccessTechnology isEqualToString:CTRadioAccessTechnologyGPRS]) {
-                        return @"2g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyEdge]) {
-                        return @"2g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyWCDMA]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyHSDPA]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyHSUPA]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyCDMA1x]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyCDMAEVDORev0]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyCDMAEVDORevA]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyCDMAEVDORevB]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyeHRPD]) {
-                        return @"3g";
-                    } else if ([telephonyInfo.currentRadioAccessTechnology  isEqualToString:CTRadioAccessTechnologyLTE]) {
-                        return @"4g";
-                    }
-                }
-                return @"cellular";
-            }
-        }
-        case ReachableViaWiFi:
+            
+        case Reachable:
             return @"wifi";
 
         default:
@@ -145,12 +110,12 @@
     [self.internetReach startNotifier];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
                                                  name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
-                                                 name:CTRadioAccessTechnologyDidChangeNotification object:nil];
-    if (UIApplicationDidEnterBackgroundNotification && UIApplicationWillEnterForegroundNotification) {
+    /*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
+                                                 name:CTRadioAccessTechnologyDidChangeNotification object:nil];*/
+    /*if (UIApplicationDidEnterBackgroundNotification && UIApplicationWillEnterForegroundNotification) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPause) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onResume) name:UIApplicationWillEnterForegroundNotification object:nil];
-    }
+    }*/
 }
 
 @end

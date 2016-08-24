@@ -50,8 +50,7 @@
 
 typedef enum {
     NotReachable = 0,
-    ReachableViaWWAN, // this value has been swapped with ReachableViaWiFi for Cordova backwards compat. reasons
-    ReachableViaWiFi  // this value has been swapped with ReachableViaWWAN for Cordova backwards compat. reasons
+    Reachable
 } NetworkStatus;
 #define kReachabilityChangedNotification @"kNetworkReachabilityChangedNotification"
 

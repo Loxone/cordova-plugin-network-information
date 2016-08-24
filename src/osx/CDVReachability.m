@@ -198,7 +198,7 @@ static void CDVReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
 
     BOOL retVal = NotReachable;
     if ((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect)) {
-        retVal = ReachableViaWiFi;
+        retVal = Reachable;
     }
     return retVal;
 }
@@ -216,7 +216,7 @@ static void CDVReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
     if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0) {
         // if target host is reachable and no connection is required
         //  then we'll assume (for now) that your on Wi-Fi
-        retVal = ReachableViaWiFi;
+        retVal = Reachable;
     }
 
     if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand) != 0) ||
@@ -226,15 +226,10 @@ static void CDVReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRe
 
         if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0) {
             // ... and no [user] intervention is needed
-            retVal = ReachableViaWiFi;
+            retVal = Reachable;
         }
     }
-
-    if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) {
-        // ... but WWAN connections are OK if the calling application
-        //     is using the CFNetwork (CFSocketStream?) APIs.
-        retVal = ReachableViaWWAN;
-    }
+    
     return retVal;
 }
 
