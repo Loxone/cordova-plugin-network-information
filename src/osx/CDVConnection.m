@@ -91,33 +91,14 @@
     }
 }
 
-- (void)onPause
-{
-    [self.internetReach stopNotifier];
-}
-
-- (void)onResume
-{
-    [self.internetReach startNotifier];
-    [self updateReachability:self.internetReach];
-}
-
 - (void)pluginInitialize
 {
     self.connectionType = @"none";
     self.internetReach = [CDVReachability reachabilityForInternetConnection];
-    self.connectionType = [self w3cConnectionTypeFor:self.internetReach];
-    [self.internetReach startNotifier];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
                                                  name:kReachabilityChangedNotification object:nil];
-    
-    /*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateConnectionType:)
-                                                 name:CTRadioAccessTechnologyDidChangeNotification object:nil];*/
-    
-    if (NSWindowWillCloseNotification && @"NSWindowWillOpenNotification") {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPause) name:NSWindowWillCloseNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onResume) name:@"NSWindowWillOpenNotification" object:nil];
-    }
+    self.connectionType = [self w3cConnectionTypeFor:self.internetReach];
+    [self.internetReach startNotifier];
 }
 
 @end

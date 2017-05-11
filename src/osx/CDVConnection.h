@@ -31,7 +31,4 @@
 @property (copy) NSString* connectionType;
 @property (strong) CDVReachability* internetReach;
 
-// After closing the connection the first time (AppDelegate), also pause the notifier
-- (void)onPause;
-
 @end
